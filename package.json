@@ -1,0 +1,69 @@
+{
+	"name": "foodnotes",
+	"private": true,
+	"version": "0.0.1",
+	"type": "module",
+	"scripts": {
+		"dev": "ENV=preview vite dev",
+		"build": "vite build",
+		"prepare": "svelte-kit sync || echo ''",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"format": "prettier --write .",
+		"lint": "prettier --check . && eslint .",
+		"generate": "drizzle-kit generate",
+		"migrate": "drizzle-kit migrate",
+		"deploy": "npm run build && wrangler pages deploy",
+		"cf-typegen": "wrangler types && mv worker-configuration.d.ts src/"
+	},
+	"devDependencies": {
+		"@eslint/compat": "^1.2.8",
+		"@eslint/js": "^9.24.0",
+		"@neondatabase/serverless": "^1.0.0",
+		"@oslojs/crypto": "^1.0.1",
+		"@oslojs/encoding": "^1.1.0",
+		"@pilcrowjs/object-parser": "^0.0.4",
+		"@sveltejs/adapter-cloudflare": "^7.0.1",
+		"@sveltejs/kit": "^2.20.4",
+		"@sveltejs/vite-plugin-svelte": "^5.0.3",
+		"@tailwindcss/postcss": "^4.1.3",
+		"@tanstack/svelte-query": "^5.71.10",
+		"@trpc/client": "^11.0.2",
+		"@trpc/server": "^11.0.2",
+		"arctic": "^3.6.0",
+		"devalue": "^5.1.1",
+		"dotenv": "^16.4.7",
+		"drizzle-kit": "^0.30.6",
+		"drizzle-orm": "^0.41.0",
+		"eslint": "^9.24.0",
+		"eslint-config-prettier": "^10.1.1",
+		"eslint-plugin-svelte": "^3.5.1",
+		"globals": "^16.0.0",
+		"prettier": "^3.5.3",
+		"prettier-plugin-svelte": "^3.3.3",
+		"prettier-plugin-tailwindcss": "^0.6.11",
+		"svelte": "^5.25.6",
+		"svelte-check": "^4.1.5",
+		"tailwindcss": "^4.1.3",
+		"trpc-svelte-query": "^3.0.1",
+		"typescript": "^5.8.3",
+		"typescript-eslint": "^8.29.0",
+		"vite": "^6.2.5",
+		"wrangler": "^4.7.2",
+		"zod": "^3.24.2"
+	},
+	"packageManager": "pnpm@10.7.1",
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"workerd",
+			"better-sqlite3",
+			"sharp",
+			"esbuild",
+			"prisma",
+			"@prisma/engines"
+		],
+		"ignoredBuiltDependencies": [
+			"core-js"
+		]
+	}
+}
