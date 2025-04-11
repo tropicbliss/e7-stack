@@ -7,8 +7,6 @@ import type { Handle } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
 import { ratelimit } from "$lib/server/rate-limit";
 
-const UNAUTHORISED_USER = "Unauthorised user";
-
 const rateLimitHandle: Handle = async ({ event, resolve }) => {
     const clientIP = event.request.headers.get("cf-connecting-ip");
     if (clientIP === null) {
@@ -34,17 +32,9 @@ const rateLimitHandle: Handle = async ({ event, resolve }) => {
 
 const authHandle: Handle = async ({ event, resolve }) => {
     const token = event.cookies.get("session") ?? null;
-    const isProtectedRoute = ["chainchomp", "warppipe", "tripplanner"].some(
-        (path) => event.url.pathname.includes(path),
-    );
     if (token === null) {
         event.locals.user = null;
         event.locals.session = null;
-        if (isProtectedRoute) {
-            return new Response(UNAUTHORISED_USER, {
-                status: 401,
-            });
-        }
         return resolve(event);
     }
 
@@ -57,12 +47,6 @@ const authHandle: Handle = async ({ event, resolve }) => {
 
     event.locals.session = session;
     event.locals.user = user;
-
-    if (user === null && isProtectedRoute) {
-        return new Response(UNAUTHORISED_USER, {
-            status: 401,
-        });
-    }
 
     return resolve(event);
 };
